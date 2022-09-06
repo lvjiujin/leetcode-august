@@ -33,6 +33,14 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[151]反转字符串中的单词.py" />
               <option name="titleSlug" value="reverse-words-in-a-string" />
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1408]数组中的字符串匹配.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[1408]数组中的字符串匹配.md" />
+              <option name="frontendQuestionId" value="leetcode.cn1408" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[1408]数组中的字符串匹配.py" />
+              <option name="titleSlug" value="string-matching-in-an-array" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -77,6 +85,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[1]两数之和.py" />
               <option name="titleSlug" value="two-sum" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2156]查找给定哈希值的子串.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[2156]查找给定哈希值的子串.md" />
+              <option name="frontendQuestionId" value="leetcode.cn2156" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[2156]查找给定哈希值的子串.py" />
+              <option name="titleSlug" value="find-substring-with-given-hash-value" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -264,6 +283,14 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[5]最长回文子串.py" />
               <option name="titleSlug" value="longest-palindromic-substring" />
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[686]重复叠加字符串匹配.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[686]重复叠加字符串匹配.md" />
+              <option name="frontendQuestionId" value="leetcode.cn686" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[686]重复叠加字符串匹配.py" />
+              <option name="titleSlug" value="repeated-string-match" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -275,6 +302,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[706]设计哈希映射.py" />
               <option name="titleSlug" value="design-hashmap" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[796]旋转字符串.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[796]旋转字符串.md" />
+              <option name="frontendQuestionId" value="leetcode.cn796" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[796]旋转字符串.py" />
+              <option name="titleSlug" value="rotate-string" />
             </LeetcodeEditor>
           </value>
         </entry>
