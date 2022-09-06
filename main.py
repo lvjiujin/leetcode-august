@@ -110,17 +110,104 @@ class Solution:
                 return i - j + 1
         return -1  # 匹配失败，返回 -1
 
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        # if not s:
+        #     return 0
+        # ss = ""
+        # res = []
+        # for x in s:
+        #     if x not in ss:
+        #         ss += x
+        #         res.append(ss)
+        #
+        #     else:
+        #
+        #         index = ss.find(x)
+        #         ss = ss[index+1:] + x
+        #
+        # return max([len(x) for x in res])
+        # 滑动窗口法：
+        # 当没有重复字符时调整右边界，有重复字符时调整左边界
+        if not s:
+            return 0
+        freq = {}
+        start = max_length = 0
+        for end, c in enumerate(s):
+            freq[c] = freq.get(c, 0) + 1
+            while freq[c] > 1:
+                freq[s[start]] -=1 # 懂了，这里是将start对应字符的计数减一，而不是freq[c]-1. 用循环的目的是可以减少到freq[c]=1
+                start+=1
+            max_length = max(max_length, end-start + 1)
+        return max_length
 
-# Press the green button in the gutter to run the script.
+    def reverseWords(self, s: str) -> str:
+        if not s:
+            return ''
+        s = s.strip()
+        return " ".join([x.strip() for x in s.split(" ") if x != ""][::-1])
+
+    def multiply(self, num1: str, num2: str) -> str:
+        if num1 == '0' or num2 == '0':
+            return '0'
+        # 方法一：
+        ans = "0"
+        m, n = len(num1), len(num2)
+        for i in range(n - 1, -1, -1):
+            add = 0
+            y = int(num2[i])
+            curr = ["0"] * (n - i - 1)
+            for j in range(m - 1, -1, -1):
+                product = int(num1[j]) * y + add
+                curr.append(str(product % 10))
+                add = product // 10
+            if add > 0:
+                curr.append(str(add))
+            curr = "".join(curr[::-1])
+            ans = self.addStrings(ans, curr)
+
+        return ans
+
+        # 方法二：
+        # m, n = len(num1), len(num2)
+        # ansArr = [0] * (m + n)
+        # for i in range(m - 1, -1, -1):
+        #     x = int(num1[i])
+        #     for j in range(n - 1, -1, -1):
+        #         ansArr[i + j + 1] += x * int(num2[j])
+        #
+        # for i in range(m + n - 1, 0, -1):
+        #     ansArr[i - 1] += ansArr[i] // 10
+        #     ansArr[i] %= 10
+        #
+        # index = 1 if ansArr[0] == 0 else 0
+        # ans = "".join(str(x) for x in ansArr[index:])
+        # return ans
+
+    def addStrings(self, num1: str, num2: str) -> str:
+        i, j = len(num1) - 1, len(num2) -1
+        carry = 0
+        ans = ""
+        while i >= 0 or j >= 0:
+            x = int(num1[i]) if i >= 0 else 0
+            y = int(num2[j]) if j >=0 else 0
+            temp = x + y + carry
+            carry = temp // 10
+            ans = str(temp % 10) + ans
+            i -= 1
+            j -= 1
+        return ans if not carry else '1' + ans
+
+
+
+
 if __name__ == '__main__':
-    func()
+    # func()
     solution = Solution()
     # s = "ABCABCD"
-    s = "ABCABCABC"
-    # next = solution.get_next(s)
-    # next = solution.generateNext(s)
-    next = solution.get_new_next(s)
-    print("next = ", next)
+    # s = "ABCABCABC"
+    # # next = solution.generateNext(s)
+    # nxt = solution.get_next(s)
+    # print("next = ", nxt)
     # nums = [-2, -1, -1, 1, 1, 2, 2]
     # target = 0
 
@@ -128,10 +215,14 @@ if __name__ == '__main__':
     # print("res = ", res)
     # print("正确结果为：[[-2,-1,1,2],[-1,-1,1,1]]")
 
+    # s = "pwwkew"
+    # length = solution.lengthOfLongestSubstring(s)
+    # print("length = ", length)
+    # s = "a good   example"
+    # res = solution.reverseWords(s)
+    # print("res = ", res)
+    num1 = "1234"
+    num2 = "567"
+    res = solution.multiply(num1, num2)
+    print("res = ", res)
 
-
-
-
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/

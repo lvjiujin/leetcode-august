@@ -1,0 +1,15 @@
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        # L = len(s)
+        # for i in range(L):
+        #     s[i], s[L-1-i] = s[L-1-i], s[i]
+        #     print("s[i] = ", s[i])
+        #     # s[:] = [s[L-1-i]] + s[i+1:L-1-i] + [s[i]]
+        
+        s = s.reverse()
+        
+# runtime:52 ms
+# memory:14.4 MB

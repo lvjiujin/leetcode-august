@@ -42,4 +42,33 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        if not s:
+            return 0
+        ss = ""
+        res = []
+        for x in s:
+            if x not in ss:
+                ss += x
+                res.append(ss)
+
+            else:
+
+                index = ss.find(x)
+                ss = ss[index+1:] + x
+
+        return max([len(x) for x in res])
+        # 滑动窗口法：
+        # 当没有重复字符时调整右边界，有重复字符时调整左边界
+        # if not s:
+        #     return 0
+        # freq = {}
+        # start = max_length = 0
+        # for end, c in enumerate(s):
+        #     freq[c] = freq.get(c, 0) + 1
+        #     while freq[c] > 1:
+        #         freq[s[start]] -=1
+        #         start+=1
+        #     max_length = max(max_length, end-start + 1)
+        # return max_length
+
 # leetcode submit region end(Prohibit modification and deletion)
