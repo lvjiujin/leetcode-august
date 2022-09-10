@@ -3,77 +3,80 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from typing import List
+from collections import defaultdict
 
 """
 nonlocal只能在封装函数中使用，在外部函数先进行声明，在内部函数进行nonlocal声明，
 这样在func()函数中的x与subfunc()中的x是同一个变量。
 """
 
+
 def func():
     x = 2
+
     def subfunc(num):
-        nonlocal x # nonlocal是用于函数中的函数
+        nonlocal x  # nonlocal是用于函数中的函数
         x = x + num
 
     subfunc(2)
     print("x = ", x)
 
+
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        if not nums or len(nums) < 4 :
+        if not nums or len(nums) < 4:
             return []
         n = len(nums)
         nums.sort()
         print("sorted nums = ", nums)
         result = []
 
-        for i in range(n-3):
-            if i > 0 and nums[i] == nums[i-1]:
+        for i in range(n - 3):
+            if i > 0 and nums[i] == nums[i - 1]:
                 continue
 
-            for j in range(i+1, n-2):
-                if j > i+1 and nums[j] == nums[j-1]:
+            for j in range(i + 1, n - 2):
+                if j > i + 1 and nums[j] == nums[j - 1]:
                     continue
                 partsum = nums[i] + nums[j]
-                left, right = j+1, n-1
+                left, right = j + 1, n - 1
                 while left < right:
                     s = partsum + nums[left] + nums[right]
                     if s == target:
                         result.append([nums[i], nums[j], nums[left], nums[right]])
                         while left < right:
                             left += 1
-                            if nums[left] != nums[left-1]:
+                            if nums[left] != nums[left - 1]:
                                 break
                         while left < right:
                             right -= 1
-                            if nums[right] != nums[right+1]:
+                            if nums[right] != nums[right + 1]:
                                 break
                     elif s > target:
-                        right-=1
-                        while left < right and  nums[right] == nums[right+1]:
-                            right-=1
+                        right -= 1
+                        while left < right and nums[right] == nums[right + 1]:
+                            right -= 1
                     else:
-                        left+=1
-                        while left < right and  nums[left] == nums[left-1]:
-                            left+=1
+                        left += 1
+                        while left < right and nums[left] == nums[left - 1]:
+                            left += 1
 
         return result
 
     def get_next(self, P):
         # get_next是统计出每个位置之前的子串的前后缀数目
         n = len(P)
-        nxt = [0] * (n+1)
+        nxt = [0] * (n + 1)
         nxt[0] = -1  # nxt[0]的这个位置，相当于是一个标志。
         i, j = 0, -1
         while i < n:
             if j == -1 or P[i] == P[j]:
-                i, j = i+1, j+1
+                i, j = i + 1, j + 1
                 nxt[i] = j
             else:
                 j = nxt[j]
 
         return nxt
-
 
     def generateNext(self, p: str):
         """
@@ -135,9 +138,9 @@ class Solution:
         for end, c in enumerate(s):
             freq[c] = freq.get(c, 0) + 1
             while freq[c] > 1:
-                freq[s[start]] -=1 # 懂了，这里是将start对应字符的计数减一，而不是freq[c]-1. 用循环的目的是可以减少到freq[c]=1
-                start+=1
-            max_length = max(max_length, end-start + 1)
+                freq[s[start]] -= 1  # 懂了，这里是将start对应字符的计数减一，而不是freq[c]-1. 用循环的目的是可以减少到freq[c]=1
+                start += 1
+            max_length = max(max_length, end - start + 1)
         return max_length
 
     def reverseWords(self, s: str) -> str:
@@ -184,12 +187,12 @@ class Solution:
         # return ans
 
     def addStrings(self, num1: str, num2: str) -> str:
-        i, j = len(num1) - 1, len(num2) -1
+        i, j = len(num1) - 1, len(num2) - 1
         carry = 0
         ans = ""
         while i >= 0 or j >= 0:
             x = int(num1[i]) if i >= 0 else 0
-            y = int(num2[j]) if j >=0 else 0
+            y = int(num2[j]) if j >= 0 else 0
             temp = x + y + carry
             carry = temp // 10
             ans = str(temp % 10) + ans
@@ -197,12 +200,140 @@ class Solution:
             j -= 1
         return ans if not carry else '1' + ans
 
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        # 首先将 dictionary 中所有词根放入哈希集合中，然后对于 sentence中的每个单词，
+        # 由短至长遍历它所有的前缀，如果这个前缀出现在哈希集合中，则我们找到了当前单词的最短词根，
+        # 将这个词根替换原来的单词。最后返回重新拼接的句子。
 
+        # dict_set = set(dictionary)
+        # words = sentence.split(' ')
+        # for i, word in enumerate(words):
+        #     for j in range(1, len(word)):
+        #         if word[:j] in dict_set:
+        #             words[i] = word[:j]
+        #             break
+        # return ' '.join(words)
+        trie = {}
+        for word in dictionary:
+            cur = trie
+            for c in word:
+                if c not in cur:
+                    cur[c] = {}
+                cur = cur[c]
+            cur['#'] = {}
+        print("trie = ", trie)
+        """
+        ["cat", "bat", "rat"]
+        trie =  {'c': {'a': {'t': {'#': {}}}}, 
+                'b': {'a': {'t': {'#': {}}}}, 
+                'r': {'a': {'t': {'#': {}}}}} 
+        """
+        words = sentence.split(' ')
+        for i, word in enumerate(words):
+            cur = trie
+            for j, c in enumerate(word):
+                if '#' in cur:
+                    words[i] = word[:j]
+                    break
+                if c not in cur:
+                    break
+                cur = cur[c]
+        return ' '.join(words)
+
+
+class WordDictionary:
+    def __init__(self):
+        self.dct = dict()
+
+    def addWord(self, word: str) -> None:
+        cur = self.dct
+        for w in word:
+            if w not in cur:
+                cur[w] = dict()
+            cur = cur[w]
+        cur['isEnd'] = 1
+        return
+
+    def search(self, word: str) -> bool:
+
+        def dfs(cur, i):
+            nonlocal ans
+            if i == n:
+                if 'isEnd' in cur:
+                    ans = True
+                return
+            if ans:
+                return
+            if word[i] == '.':
+                for w in cur:
+                    if w != 'isEnd':
+                        dfs(cur[w], i + 1)
+            if word[i] in cur:
+                dfs(cur[word[i]], i + 1)
+            return
+
+        n = len(word)
+        ans = False
+        dfs(self.dct, 0)
+        return ans
+
+    # def __init__(self):
+    #     self.dictw = dict()
+    #     self.dictn = defaultdict(list)
+    #
+    # def addWord(self, word: str) -> None:
+    #     if word not in self.dictw:
+    #         self.dictn[len(word)].append(word)
+    #         self.dictw[word] = len(word)
+    #
+    # def search(self, word: str) -> bool:
+    #     print("word = ", word)
+    #     if word in self.dictw:
+    #         return True
+    #     # 双dict，长度和字符互相为key，直接比较，完美
+    #     for w in self.dictn[len(word)]:
+    #         if '.' in word:
+    #             length = 0
+    #             for i in range(len(w)):
+    #                 if w[i] == word[i] or word[i] == '.':
+    #                     length += 1
+    #                 else:
+    #                     break
+    #             if length == len(w):
+    #                 return True
+    #     return False
+    # def __init__(self):
+    #     self.trie = {}
+    #
+    # def addWord(self, word):  # e.g., root -> [s] -> [e] -> [a] -> ['$']
+    #     node = self.trie
+    #     for char in word:
+    #         if char not in node:
+    #             node[char] = {}
+    #         node = node[char]
+    #     node['$'] = None  # end of word
+    #
+    # def search(self, word):
+    #     n = len(word)
+    #
+    #     def dfs(node, char_index=0):  # e.g., char_index, 0, 1, 2: [s] (0) -> [e] (1) -> [a] (2)
+    #         if char_index == n:
+    #             return '$' in node
+    #         if word[char_index] == ".":
+    #             for letter in node:
+    #                 if letter != '$' and dfs(node[letter], char_index + 1):
+    #                     return True
+    #         elif word[char_index] in node:
+    #             return dfs(node[word[char_index]], char_index + 1)
+    #         else:
+    #             return False
+    #
+    #     return dfs(self.trie)
 
 
 if __name__ == '__main__':
     # func()
-    solution = Solution()
+    # solution = Solution()
     # s = "ABCABCD"
     # s = "ABCABCABC"
     # # next = solution.generateNext(s)
@@ -221,8 +352,35 @@ if __name__ == '__main__':
     # s = "a good   example"
     # res = solution.reverseWords(s)
     # print("res = ", res)
-    num1 = "1234"
-    num2 = "567"
-    res = solution.multiply(num1, num2)
-    print("res = ", res)
+    # num1 = "1234"
+    # num2 = "567"
+    # res = solution.multiply(num1, num2)
+    # print("res = ", res)
+    # dictionary = ["cat", "bat", "rat"]
+    # sentence = "the cattle was rattled by the battery"
+    # res = solution.replaceWords(dictionary, sentence)
+    # print("res = ", res)
+    dictionary = ["WordDictionary", "addWord", "addWord", "search", "search", "search",
+                  "search", "search", "search"]
+    words = [[], ["a"], ["a"], ["."], ["a"], ["aa"], ["a"], [".a"], ["a."]]
+    word_dict = WordDictionary()
+    for word in dictionary:
+        word_dict.addWord(word)
 
+    res = word_dict.search('.')
+    print('res = ', res)
+    # res = []
+    # for word in words:
+    #     if len(word) != 0:
+    #         temp = word[0]
+    #     else:
+    #         temp = ""
+    #     result = word_dict.search(temp)
+    #     res.append(result)
+    # print("res = ", res)
+
+    """
+        测试结果:[null,null,null,true,true,false,true,null,null]
+	    期望结果:[null,null,null,true,true,false,true,false,false]
+	    本地结果：[False, False, False, None, False, False, False, False, False]
+    """
