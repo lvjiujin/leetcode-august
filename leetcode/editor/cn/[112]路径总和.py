@@ -54,38 +54,33 @@
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         import collections
-        # 递归:
+        # 方法一：递归:
         # if not root:
         #     return False
-        # if not root.left and not root.right and targetSum == root.val:
-        #     return True
-        # return self.hasPathSum(root.left, targetSum-root.val) or self.hasPathSum(root.right, targetSum-root.val)
-        ret = list()
-        parent = collections.defaultdict(lambda: None)
-
-        def getPath(node: TreeNode):
-            tmp = list()
-            while node:
-                tmp.append(node.val)
-                node = parent[node]
-                ret.append(tmp[::-1])
+        # if not root.left and not root.right:
+        #     return root.val == targetSum
+        # return self.hasPathSum(root.left, targetSum-root.val) or self.hasPathSum(root.right, targetSum - root.val)
+        # 方法二：BFS
+        # 广度优先搜索的方式，记录从根节点到当前节点的路径和，以防止重复计算。
+        # 这样我们使用两个队列，分别存储将要遍历的节点，以及根节点到这些节点的路径和即可
         if not root:
             return False
-        que_node = collections.deque([root])
-        que_val = collections.deque([root.val])
+        from collections import deque
+        que_node = deque([root])
+        que_val = deque([root.val])
         while que_node:
-            now = que_node.popleft()
-            temp = que_val.popleft()
-            if not now.left and not now.right:
-                if temp == targetSum:
+            node = que_node.popleft()
+            tmp = que_val.popleft()
+            if not node.left and not node.right:
+                if tmp == targetSum:
                     return True
                 continue
-            if now.left:
-                que_node.append(now.left)
-                que_val.append(now.left.val + temp)
-            if now.right:
-                que_node.append(now.right)
-                que_val.append(now.right.val + temp)
+            if node.left:
+                que_node.append(node.left)
+                que_val.append(tmp+node.left.val)
+            if node.right:
+                que_node.append(node.right)
+                que_val.append(tmp+node.right.val)
         return False
 
 

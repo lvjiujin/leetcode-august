@@ -10,6 +10,11 @@ nonlocal只能在封装函数中使用，在外部函数先进行声明，在内
 这样在func()函数中的x与subfunc()中的x是同一个变量。
 """
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 def func():
     x = 2
@@ -199,6 +204,31 @@ class Solution:
             i -= 1
             j -= 1
         return ans if not carry else '1' + ans
+
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        # 二叉树的层序遍历，每一层都是一个对称数组，只有这样才满足对称二叉树。
+        if not root:
+            return []
+        queue = [root]
+        while queue:
+            # 获取当前队列的长度，这个长度相当于 当前这一层的节点个数,不在同一层的就不会同时出现在队列中。
+            size = len(queue)
+            tmp = []
+            # 将队列中的元素都拿出来(也就是获取这一层的节点)，放到临时list中
+            # 如果节点的左/右子树不为空，也放入队列中
+            for _ in range(size):
+                r = queue.pop(0)
+                tmp.append(r.val)
+                if r.left:
+                    queue.append(r.left)
+                if r.right:
+                    queue.append(r.right)
+            # 将临时list加入最终返回结果中
+            for i in range(len(tmp)):
+                if tmp[i] != tmp[len(tmp) - 1 - i]:
+                    return False
+
+        return True
 
     def replaceWords(self, dictionary: List[str], sentence: str) -> str:
         # 首先将 dictionary 中所有词根放入哈希集合中，然后对于 sentence中的每个单词，
