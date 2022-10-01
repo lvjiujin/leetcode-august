@@ -205,30 +205,30 @@ class Solution:
             j -= 1
         return ans if not carry else '1' + ans
 
-    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        # 二叉树的层序遍历，每一层都是一个对称数组，只有这样才满足对称二叉树。
-        if not root:
-            return []
-        queue = [root]
-        while queue:
-            # 获取当前队列的长度，这个长度相当于 当前这一层的节点个数,不在同一层的就不会同时出现在队列中。
-            size = len(queue)
-            tmp = []
-            # 将队列中的元素都拿出来(也就是获取这一层的节点)，放到临时list中
-            # 如果节点的左/右子树不为空，也放入队列中
-            for _ in range(size):
-                r = queue.pop(0)
-                tmp.append(r.val)
-                if r.left:
-                    queue.append(r.left)
-                if r.right:
-                    queue.append(r.right)
-            # 将临时list加入最终返回结果中
-            for i in range(len(tmp)):
-                if tmp[i] != tmp[len(tmp) - 1 - i]:
-                    return False
-
-        return True
+    # def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+    #     # 二叉树的层序遍历，每一层都是一个对称数组，只有这样才满足对称二叉树。
+    #     if not root:
+    #         return []
+    #     queue = [root]
+    #     while queue:
+    #         # 获取当前队列的长度，这个长度相当于 当前这一层的节点个数,不在同一层的就不会同时出现在队列中。
+    #         size = len(queue)
+    #         tmp = []
+    #         # 将队列中的元素都拿出来(也就是获取这一层的节点)，放到临时list中
+    #         # 如果节点的左/右子树不为空，也放入队列中
+    #         for _ in range(size):
+    #             r = queue.pop(0)
+    #             tmp.append(r.val)
+    #             if r.left:
+    #                 queue.append(r.left)
+    #             if r.right:
+    #                 queue.append(r.right)
+    #         # 将临时list加入最终返回结果中
+    #         for i in range(len(tmp)):
+    #             if tmp[i] != tmp[len(tmp) - 1 - i]:
+    #                 return False
+    #
+    #     return True
 
     def replaceWords(self, dictionary: List[str], sentence: str) -> str:
         # 首先将 dictionary 中所有词根放入哈希集合中，然后对于 sentence中的每个单词，
@@ -390,15 +390,15 @@ if __name__ == '__main__':
     # sentence = "the cattle was rattled by the battery"
     # res = solution.replaceWords(dictionary, sentence)
     # print("res = ", res)
-    dictionary = ["WordDictionary", "addWord", "addWord", "search", "search", "search",
-                  "search", "search", "search"]
-    words = [[], ["a"], ["a"], ["."], ["a"], ["aa"], ["a"], [".a"], ["a."]]
-    word_dict = WordDictionary()
-    for word in dictionary:
-        word_dict.addWord(word)
-
-    res = word_dict.search('.')
-    print('res = ', res)
+    # dictionary = ["WordDictionary", "addWord", "addWord", "search", "search", "search",
+    #               "search", "search", "search"]
+    # words = [[], ["a"], ["a"], ["."], ["a"], ["aa"], ["a"], [".a"], ["a."]]
+    # word_dict = WordDictionary()
+    # for word in dictionary:
+    #     word_dict.addWord(word)
+    #
+    # res = word_dict.search('.')
+    # print('res = ', res)
     # res = []
     # for word in words:
     #     if len(word) != 0:
@@ -414,3 +414,8 @@ if __name__ == '__main__':
 	    期望结果:[null,null,null,true,true,false,true,false,false]
 	    本地结果：[False, False, False, None, False, False, False, False, False]
     """
+    import os
+    path = "C:\\Introduction_to_Algorithm_Training_Camp\\cpp_stl"
+    for file in os.listdir(path):
+        new_file = "".join(file.split(' '))
+        os.rename(os.path.join(path, file), os.path.join(path,new_file))

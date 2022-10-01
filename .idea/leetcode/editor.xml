@@ -157,6 +157,28 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1202]交换字符串中的元素.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[1202]交换字符串中的元素.md" />
+              <option name="frontendQuestionId" value="leetcode.cn1202" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[1202]交换字符串中的元素.py" />
+              <option name="titleSlug" value="smallest-string-with-swaps" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[128]最长连续序列.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[128]最长连续序列.md" />
+              <option name="frontendQuestionId" value="leetcode.cn128" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[128]最长连续序列.py" />
+              <option name="titleSlug" value="longest-consecutive-sequence" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1382]将二叉搜索树变平衡.py">
           <value>
             <LeetcodeEditor>
@@ -355,6 +377,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[547]省份数量.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[547]省份数量.md" />
+              <option name="frontendQuestionId" value="leetcode.cn547" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[547]省份数量.py" />
+              <option name="titleSlug" value="number-of-provinces" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[617]合并二叉树.py">
           <value>
             <LeetcodeEditor>
@@ -443,6 +476,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[765]情侣牵手.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[765]情侣牵手.md" />
+              <option name="frontendQuestionId" value="leetcode.cn765" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[765]情侣牵手.py" />
+              <option name="titleSlug" value="couples-holding-hands" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[889]根据前序和后序遍历构造二叉树.py">
           <value>
             <LeetcodeEditor>
@@ -451,6 +495,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[889]根据前序和后序遍历构造二叉树.py" />
               <option name="titleSlug" value="construct-binary-tree-from-preorder-and-postorder-traversal" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[947]移除最多的同行或同列石头.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[947]移除最多的同行或同列石头.md" />
+              <option name="frontendQuestionId" value="leetcode.cn947" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[947]移除最多的同行或同列石头.py" />
+              <option name="titleSlug" value="most-stones-removed-with-same-row-or-column" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -473,6 +528,39 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[98]验证二叉搜索树.py" />
               <option name="titleSlug" value="validate-binary-search-tree" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[990]等式方程的可满足性.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[990]等式方程的可满足性.md" />
+              <option name="frontendQuestionId" value="leetcode.cn990" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[990]等式方程的可满足性.py" />
+              <option name="titleSlug" value="satisfiability-of-equality-equations" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[剑指 Offer II 001]整数除法.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[剑指 Offer II 001]整数除法.md" />
+              <option name="frontendQuestionId" value="leetcode.cn剑指 Offer II 001" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[剑指 Offer II 001]整数除法.py" />
+              <option name="titleSlug" value="xoh6Oh" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[面试题 01.08]零矩阵.py">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[面试题 01.08]零矩阵.md" />
+              <option name="frontendQuestionId" value="leetcode.cn面试题 01.08" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[面试题 01.08]零矩阵.py" />
+              <option name="titleSlug" value="zero-matrix-lcci" />
             </LeetcodeEditor>
           </value>
         </entry>

@@ -93,7 +93,7 @@ class Solution:
             while p:
                 stack.append(p)
                 p = p.left
-            node = stack.pop() # 注意pop出来后，换一个节点名称，不要再用p了。          
+            node = stack.pop() # 注意pop出来后，换一个节点名称，不要再用p了。
             cur = node.val
             if cur - prev < min_val:
                 min_val = cur - prev
