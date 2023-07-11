@@ -1,0 +1,28 @@
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        result = []
+
+        def backTrack(s, start, substrings, res):
+            if start == len(s):
+
+                res.append(substrings[:])
+                return
+            for i in range(start, len(s)):
+                if isPalindrome(s, start, i):
+                    substrings.append(s[start: i + 1])
+                    backTrack(s, i + 1, substrings, res)
+                    substrings.pop()
+
+        def isPalindrome(ss, start, end):
+            while start < end:
+                if ss[start] != ss[end]:
+                    return False
+                start += 1
+                end -= 1
+            return True
+
+        backTrack(s, 0, [], result)
+        return result
+
+# runtime:120 ms
+# memory:29.9 MB

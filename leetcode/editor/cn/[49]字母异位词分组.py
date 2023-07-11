@@ -34,18 +34,29 @@
 #  
 # 
 #  Related Topics 数组 哈希表 字符串 排序 👍 1247 👎 0
+import collections
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        # 这个代码要好好理解，不是很容易懂。
-        if not strs:
-            return []
-        anagrams_dict = dict()
-        for item in strs:
-            key = tuple(sorted(item))
-            anagrams_dict[key] = anagrams_dict.get(key, []) + [item]
-        return list(anagrams_dict.values())
+        mp = collections.defaultdict(list)
+
+        for st in strs:
+            key = "".join(sorted(st))
+            mp[key].append(st)
+
+        return list(mp.values())
+
+        # if not strs:
+        #     return []
+        # anagrams_dict = dict()
+        # for s in strs:
+        #     # 这个地方要思考一下，为何要转换成tuple作为key？因为list不能作为key。
+        #     # 排序后返回的是一个排序后的字符列表。
+        #     # key = tuple(sorted(s))
+        #     key = "".join(sorted(s))
+        #     anagrams_dict[key] = anagrams_dict.get(key, []) + [s]
+        # return list(anagrams_dict.values())
 
 # leetcode submit region end(Prohibit modification and deletion)

@@ -10,11 +10,13 @@ nonlocal只能在封装函数中使用，在外部函数先进行声明，在内
 这样在func()函数中的x与subfunc()中的x是同一个变量。
 """
 
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
 
 def func():
     x = 2
@@ -28,6 +30,45 @@ def func():
 
 
 class Solution:
+
+    def minWindow(self, s: str, t: str) -> str:
+        if not s or not t:
+            return ""
+        # 这个代码要好好理解下
+        charToCount = dict()
+        # 首先统计字符串t中字符的词频，放到hash 字典 charToCount中。
+        for ch in t:
+            charToCount[ch] = charToCount.get(ch, 0) + 1
+        # count表示t中一共有多少个不同的字符。
+        count = len(charToCount)
+        start, end, minStart, minEnd = [0, 0, 0, 0]
+        shortest = 10 ** 5 + 1  # 字符串最大长度为10**5,所以这里这样初始化。
+        while end < len(s) or (count == 0 and end == len(s)):
+            if count > 0:
+                endCh = s[end]
+                if endCh in charToCount:
+                    charToCount[endCh] = charToCount.get(endCh) - 1
+                    if charToCount.get(endCh) == 0:  # 说明s中有该字符（即含有t中的字符)
+                        count -= 1
+
+                end += 1  # 右指针继续往右移动，判断s中的下一个字符。
+            else:
+                # else 是count ==0 说明此时, 从start到end之间的字符串已经包含了t串。因为要寻找最短子串，于是start向右转移。
+                if end - start < shortest:
+                    shortest = end - start
+                    minStart = start
+                    minEnd = end
+
+                startCh = s[start]
+                if startCh in charToCount:
+                    charToCount[startCh] = charToCount.get(startCh) + 1
+                    if charToCount[startCh] == 1:
+                        count += 1
+
+                start += 1
+
+        return s[minStart:minEnd] if shortest < (10 ** 5 + 1) else ""
+
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
         if not nums or len(nums) < 4:
             return []
@@ -363,7 +404,7 @@ class WordDictionary:
 
 if __name__ == '__main__':
     # func()
-    # solution = Solution()
+    solution = Solution()
     # s = "ABCABCD"
     # s = "ABCABCABC"
     # # next = solution.generateNext(s)
@@ -409,13 +450,17 @@ if __name__ == '__main__':
     #     res.append(result)
     # print("res = ", res)
 
-    """
-        测试结果:[null,null,null,true,true,false,true,null,null]
-	    期望结果:[null,null,null,true,true,false,true,false,false]
-	    本地结果：[False, False, False, None, False, False, False, False, False]
-    """
     import os
-    path = "C:\\Introduction_to_Algorithm_Training_Camp\\cpp_stl"
-    for file in os.listdir(path):
-        new_file = "".join(file.split(' '))
-        os.rename(os.path.join(path, file), os.path.join(path,new_file))
+
+    # path = "C:\\Introduction_to_Algorithm_Training_Camp\\cpp_stl"
+    # for file in os.listdir(path):
+    #     new_file = "".join(file.split(' '))
+    #     os.rename(os.path.join(path, file), os.path.join(path,new_file))
+
+    # s = "ADOBECODEBANC"
+    # t = "ABC"
+    # # 测试结果: "BANC"
+    # # 期望结果: "BANC"
+    # res = solution.minWindow(s, t)
+    # print('res = ', res)
+

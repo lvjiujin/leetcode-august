@@ -30,6 +30,7 @@
 #  进阶：你可以运用递归和迭代两种方法解决这个问题吗？ 
 # 
 #  Related Topics 树 深度优先搜索 广度优先搜索 二叉树 👍 2113 👎 0
+import collections
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -54,15 +55,19 @@ class Solution:
                 else:
                     return search(left.left, right.right) and search(left.right, right.left)
         return search(root, root)
+
+    def isSymmetric2(self, root: Optional[TreeNode]) -> bool:
         # 方法一：递归
-        # def check(p: TreeNode, q:TreeNode):
-        #     if not p and not q:
-        #         return True
-        #     if not p or not q:
-        #         return False
-        #     return p.val == q.val and check(p.left, q.right) and check(p.right, q.left)
-        #
-        # return check(root, root)
+        def check(p: TreeNode, q:TreeNode):
+            if not p and not q:
+                return True
+            if not p or not q:
+                return False
+            return p.val == q.val and check(p.left, q.right) and check(p.right, q.left)
+
+        return check(root, root)
+
+    def isSymmetric3(self, root: Optional[TreeNode]) -> bool:
         # 方法二：迭代法（思路还是方法一的思路）
 
         # queue = [root, root]
@@ -79,18 +84,23 @@ class Solution:
         #     queue.append(left.right)
         #     queue.append(right.left)
         # return True
+    def isSymmetric4(self, root: Optional[TreeNode]) -> bool:
         # 方法三：层序遍历：比对每一层结果是否对称，
         # 注意空结点一定要用null补充，方便比对，下一层就不需要在null结点继续拓展了
-        queue = [root]
+
+        queue = collections.deque([root])
         while queue:
             size = len(queue)
+            if size > 1 and size % 2 == 1:
+                return False
             vals = []
             for _ in range(size):
-                r = queue.pop(0)
-                vals.append(r.val) # 注意这一语句放在判断前面而不是里面
-                if r.val != 'null':
-                    queue.append(r.left if r.left else TreeNode('null'))
-                    queue.append(r.right if r.right else TreeNode('null'))
+                r = queue.popleft()
+                if r:
+                    vals.append(r.val) # 注意这一语句放在判断前面而不是里面
+                    if r.val != 'null':
+                        queue.append(r.left if r.left else TreeNode('null'))
+                        queue.append(r.right if r.right else TreeNode('null'))
 
             if vals != vals[::-1]:
                 return False

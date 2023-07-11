@@ -56,109 +56,108 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
+import collections
+
 
 class Codec:
     # 方法一：广度优先（相当于二叉树的层序遍历)
-    # def serialize(self, root):
-    #     """Encodes a tree to a single string.
-    #
-    #     :type root: TreeNode
-    #     :rtype: str
-    #     """
-    #     if not root:
-    #         return ''
-    #     from collections import deque
-    #     q = deque()
-    #     q.append(root)
-    #     res = [str(root.val)]
-    #
-    #     while q:
-    #         size = len(q)
-    #         for _ in range(size):
-    #             node = q.popleft()
-    #             if node.left:
-    #                 res.append(str(node.left.val))
-    #                 q.append(node.left)
-    #             else:
-    #                 res.append('*')
-    #             if node.right:
-    #                 res.append(str(node.right.val))
-    #                 q.append(node.right)
-    #             else:
-    #                 res.append('*')
-    #     return ",".join(res)
-    #
-    # def deserialize(self, data):
-    #     """Decodes your encoded data to tree.
-    #
-    #     :type data: str
-    #     :rtype: TreeNode
-    #     """
-    #     from collections import deque
-    #     if not data:
-    #         return None
-    #     vals = data.split(',')
-    #     root = TreeNode()
-    #     root.val = int(vals[0])
-    #     q = deque()
-    #     q.append(root)
-    #     idx = 0
-    #     while q:
-    #         for _ in range(len(q)):
-    #             node = q.popleft()
-    #             if vals[idx+1] != '*':
-    #                 node.left = TreeNode()
-    #                 node.left.val = int(vals[idx+1])
-    #                 q.append(node.left)
-    #
-    #             if vals[idx+2] != "*":
-    #                 node.right = TreeNode()
-    #                 node.right.val = int(vals[idx+2])
-    #                 q.append(node.right)
-    #
-    #             idx += 2
-    #     return root
+    def serialize1(self, root):
+        """Encodes a tree to a single string.
 
-    # 方法二：深度优先DFS,这里一定要用递归，简单而且效率高。
+        :type root: TreeNode
+        :rtype: str
+        """
+        if not root:
+            return ''
+        # 今后写代码不要用from collections import deque这种写法，直接用import collections
+        q = collections.deque()
+        q.append(root)
+        res = [str(root.val)]
 
-    # def serialize(self, root):
-    #     """Encodes a tree to a single string.
-    #
-    #    :type root: TreeNode
-    #    :rtype: str
-    #    """
-    #
-    #     def dfs(node):
-    #         if node:
-    #             vals.append(str(node.val))
-    #             dfs(node.left)
-    #             dfs(node.right)
-    #         else:
-    #             vals.append("#")
-    #
-    #     vals = []
-    #     dfs(root)
-    #     return ",".join(vals)
-    #
-    #
-    # def deserialize(self, data):
-    #     """Decodes your encoded data to tree.
-    #
-    #     :type data: str
-    #     :rtype: TreeNode
-    #     """
-    #
-    #     def dfs():
-    #         v = next(vals)
-    #         if v == "#":
-    #             return None
-    #         node = TreeNode(int(v))
-    #         node.left = dfs()
-    #         node.right = dfs()
-    #         return node
-    #
-    #     vals = iter(data.split(","))
-    #     return dfs()
+        while q:
+            size = len(q)
+            for _ in range(size):
+                node = q.popleft()
+                if node.left:
+                    res.append(str(node.left.val))
+                    q.append(node.left)
+                else:
+                    res.append('*')
+                if node.right:
+                    res.append(str(node.right.val))
+                    q.append(node.right)
+                else:
+                    res.append('*')
+        return ",".join(res)
+
+    def deserialize1(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        if not data:
+            return None
+        vals = data.split(',')
+        root = TreeNode(int(vals[0]))
+        q = collections.deque([root])
+        idx = 0
+
+        while q:
+            for _ in range(len(q)):
+                node = q.popleft()
+                if vals[idx + 1] != '*':
+                    node.left = TreeNode(int(vals[idx + 1]))
+                    q.append(node.left)
+                if vals[idx + 2] != "*":
+                    node.right = TreeNode(int(vals[idx + 2]))
+                    q.append(node.right)
+                idx += 2
+        return root
+
+    # 方法二：前序遍历，深度优先DFS,这里一定要用递归，简单而且效率高。
+
+    def serialize2(self, root):
+        """Encodes a tree to a single string.
+
+       :type root: TreeNode
+       :rtype: str
+       """
+
+        def dfs(node):
+            if node:
+                vals.append(str(node.val))
+                dfs(node.left)
+                dfs(node.right)
+            else:
+                vals.append("#")
+
+        vals = []
+        dfs(root)
+        return ",".join(vals)
+
+
+    def deserialize2(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+
+        def dfs():
+            v = next(vals)
+            if v == "#":
+                return None
+            node = TreeNode(int(v))
+            node.left = dfs()
+            node.right = dfs()
+            return node
+
+        vals = iter(data.split(","))
+        return dfs()
+
+
+    # 方法三：非递归的深度优先搜索:
     def serialize(self, root):
         """Encodes a tree to a single string.
 
@@ -166,7 +165,7 @@ class Codec:
         :rtype: str
         """
         res = []
-        queue = deque([root])
+        queue = collections.deque([root])
         while queue:
             node = queue.popleft()
             if node:
@@ -184,30 +183,26 @@ class Codec:
         :rtype: TreeNode
         """
         parts = data.split(",")
-
         idx = 0
         val = parts[idx]
-
         if val == "#":
             return None
 
         root = TreeNode(int(val))
-        queue = deque([root])
+        queue = collections.deque([root])
         while queue:
             node = queue.popleft()
             idx += 1
             val = parts[idx]
             if val != "#":
-                node.left = left = TreeNode(int(val))
-                queue.append(left)
+                node.left = TreeNode(int(val))
+                queue.append(node.left)
             idx += 1
             val = parts[idx]
             if val != "#":
-                node.right = right = TreeNode(int(val))
-                queue.append(right)
+                node.right = TreeNode(int(val))
+                queue.append(node.right)
         return root
-
-
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()

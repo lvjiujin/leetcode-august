@@ -1,0 +1,49 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # 方法一：双循环
+        def get_path(root: TreeNode, target: TreeNode) -> List[TreeNode]:
+            node = root
+            path = []
+            while node != target:
+                path.append(node)
+                if node.val < target.val:
+                    node = node.right
+                else:
+                    node = node.left
+            path.append(node)
+            return path
+        p_path = get_path(root, p)
+        q_path = get_path(root, q)
+        ancestor = None
+        for u, v in zip(p_path, q_path):
+            if u == v:
+                ancestor = u
+            else:
+                break
+        return ancestor
+
+
+
+
+        # ancestor = root
+        # while True:
+        #     if p.val < ancestor.val and q.val < ancestor.val:
+        #         ancestor = ancestor.left
+        #     elif p.val > ancestor.val and q.val > ancestor.val:
+        #         ancestor = ancestor.right
+        #     else:
+        #         break
+        # return ancestor
+
+
+        
+
+# runtime:80 ms
+# memory:18.9 MB

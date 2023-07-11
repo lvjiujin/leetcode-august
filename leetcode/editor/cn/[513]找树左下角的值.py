@@ -45,8 +45,8 @@
 class Solution:
     def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
         # 层序遍历
-        from collections import deque
-        # q = deque([root])
+        import collections
+        # q = collections.deque([root])
         # output =[]
         # while q:
         #     size = len(q)
@@ -65,7 +65,7 @@ class Solution:
         # 然后再把它的非空左子节点放入队列，这样才能保证从右到左遍历每一层的节点。
         # 广度优先搜索所遍历的最后一个节点的值就是最底层最左边节点的值。
 
-        # q = deque([root])
+        # q = collections.deque([root])  # 这句代码等价于 q.append(root)
         # ans = 0
         # while q:
         #     node = q.popleft()
@@ -75,21 +75,38 @@ class Solution:
         #         q.append(node.left)
         #     ans = node.val
         # return ans
-        curVal = curHeight = 0
+        # 方法三：
+        # curVal = curHeight = 0
+        #
+        # def dfs(node: Optional[TreeNode], height: int) -> None:
+        #     if not node:
+        #         return
+        #     height += 1
+        #     dfs(node.left, height)
+        #     dfs(node.right, height)
+        #     nonlocal curVal, curHeight
+        #     if height > curHeight:
+        #         curHeight = height
+        #         curVal = node.val
+        #
+        # dfs(root, 0)
+        # return curVal
+        # 方法四：
+        queue = collections.deque()
+        queue.append(root)
+        bottomLeft = 0
+        while queue:
+            size = len(queue)
+            for i in range(size):
+                node = queue.popleft()
+                if i == 0:
+                    bottomLeft = node.val
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+        return bottomLeft
 
-        def dfs(node: Optional[TreeNode], height: int) -> None:
-            if not node:
-                return
-            height += 1
-            dfs(node.left, height)
-            dfs(node.right, height)
-            nonlocal curVal, curHeight
-            if height > curHeight:
-                curHeight = height
-                curVal = node.val
-
-        dfs(root, 0)
-        return curVal
 
 
 

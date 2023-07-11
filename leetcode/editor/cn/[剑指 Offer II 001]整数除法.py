@@ -54,10 +54,36 @@
 #  
 # 
 #  Related Topics 位运算 数学 👍 193 👎 0
+import sys
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def divide(self, a: int, b: int) -> int:
-        
+        if a == 0x80000000 and b==-1:
+            return sys.maxsize
+        negative = 2
+        if a > 0:
+            negative -= 1
+            a = -a
+        if b > 0:
+            negative -= 1
+            b = -b
+
+        def dividCode(dividend, divisor):
+            result = 0
+            while dividend <= divisor:
+                value = divisor
+                quotient = 1
+                while value >=0xC0000000 and dividend <=(value + value):
+                    quotient +=quotient
+                    value += value
+                result += quotient
+                dividend -= value
+
+            return result
+        res = dividCode(a, b)
+        return -res if negative == 1 else res
+
+
 # leetcode submit region end(Prohibit modification and deletion)

@@ -84,22 +84,20 @@
 #
 #         return cur is not None
 
-class Node:
-    def __init__(self):
-        self.children = [None for _ in range(26)]
-        self.isEnd = False
-
 
 class Trie:
-
+    class Node:
+        def __init__(self):
+            self.children = [None for _ in range(26)]
+            self.isEnd = False
     def __init__(self):
-        self.root = Node()
+        self.root = self.Node()
 
     def insert(self, word: str) -> None:
         cur = self.root
         for ch in word:
             if cur.children[ord(ch) - ord('a')] is None:
-                cur.children[ord(ch) - ord('a')] = Node()
+                cur.children[ord(ch) - ord('a')] = self.Node()
             cur = cur.children[ord(ch) - ord('a')]
         cur.isEnd = True
 
@@ -110,7 +108,7 @@ class Trie:
                 return False
             cur = cur.children[ord(ch) - ord('a')]
 
-        return cur is not None and cur.isEnd
+        return cur.isEnd
 
     def startsWith(self, prefix: str) -> bool:
         cur = self.root
@@ -119,7 +117,7 @@ class Trie:
                 return False
             cur = cur.children[ord(ch) - ord('a')]
 
-        return cur is not None
+        return True
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()

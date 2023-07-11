@@ -43,23 +43,29 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        # 方法一：递归法:
         if len(preorder) != len(inorder):
             return None
 
-        # 方法一：递归法:
-        # def createTree(sub_preorder, sub_inorder, n):
-        #     if not n:
-        #         return None
-        #     k = 0
-        #     while sub_preorder[0] != sub_inorder[k]:
-        #         k += 1
-        #     node = TreeNode(sub_inorder[k])
-        #     # 因为左右子树可能元素个数不相同，实际上这里的参数分别给出了左右子树的个数。一遍每一次递归的时候进行分割。
-        #     node.left = createTree(sub_preorder[1:k+1], sub_inorder[0:k], k)
-        #     node.right = createTree(sub_preorder[k+1:], sub_inorder[k+1:], n - k -1)
-        #
-        #     return node
-        # return createTree(preorder, inorder, len(preorder))
+        def createTree(sub_preorder, sub_inorder, n):
+            if not n:
+                return None
+            k = 0
+            while sub_preorder[0] != sub_inorder[k]:
+                k += 1
+            node = TreeNode(sub_inorder[k])
+            # 因为左右子树可能元素个数不相同，实际上这里的参数分别给出了左右子树的个数。以便每一次递归的时候进行分割。
+            node.left = createTree(sub_preorder[1:k + 1], sub_inorder[0:k], k)
+            node.right = createTree(sub_preorder[k + 1:], sub_inorder[k + 1:], n - k - 1)
+
+            return node
+
+        return createTree(preorder, inorder, len(preorder))
+
+    def buildTree2(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if len(preorder) != len(inorder):
+            return None
+
         def build(stop):
             if inorder and inorder[-1] != stop:
                 root = TreeNode(preorder.pop())
@@ -72,29 +78,30 @@ class Solution:
         inorder.reverse()
         return build(None)
 
+    def buildTree3(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         # 方法二，采用hash映射来降低在中序遍历中查找根节点的复杂度.
-        # if len(preorder) != len(inorder) or not preorder or not inorder:
-        #     return None
-        # inorder_map = {value: i for i, value in enumerate(inorder)}
-        #
-        # def create_tree(pre_left, pre_right, in_left, in_right):
-        #     if pre_left > pre_right:
-        #         return None
-        #     pre_root = preorder[pre_left]
-        #     in_root_index = inorder_map.get(pre_root)
-        #     root = TreeNode(pre_root)
-        #     in_left_size = in_root_index-in_left
-        #
-        #     root.left = create_tree(pre_left+1, pre_left + in_left_size, in_left, in_root_index -1)
-        #     root.right = create_tree(pre_left + in_left_size + 1, pre_right, in_root_index+1, in_right)
-        #
-        #     return root
-        # n = len(inorder)
-        # root = create_tree(0, n-1, 0, n-1)
-        # return root
+        if len(preorder) != len(inorder) or not preorder or not inorder:
+            return None
+        inorder_map = {value: i for i, value in enumerate(inorder)}
 
+        def create_tree(pre_left, pre_right, in_left, in_right):
+            if pre_left > pre_right:
+                return None
+            pre_root = preorder[pre_left]
+            in_root_index = inorder_map.get(pre_root)
+            root = TreeNode(pre_root)
+            in_left_size = in_root_index - in_left
 
+            root.left = create_tree(pre_left + 1, pre_left + in_left_size, in_left, in_root_index - 1)
+            root.right = create_tree(pre_left + in_left_size + 1, pre_right, in_root_index + 1, in_right)
 
+            return root
+
+        n = len(inorder)
+        root = create_tree(0, n - 1, 0, n - 1)
+        return root
+
+    def buildTree4(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         # 方法二：用栈的方法
         """
         如果使用栈来解决首先要搞懂一个知识点，就是前序遍历挨着的两个值比如m和n，他们会有下面两种情况之一的关系。
@@ -113,27 +120,27 @@ class Solution:
         说明左子树已遍历完全（即前序序列遍历完左子树部分），开始遍历栈顶元素的右子树。
         如此遍历一遍前序和中序序列，即可构建一颗二叉树。
         """
-        # if not preorder or not inorder or len(preorder) != len(inorder):
-        #     return None
-        # # 先序遍历第一个值作为根节点
-        # root = TreeNode(preorder[0])
-        # stack = [root]
-        # inorderIndex = 0
-        # #
-        # for i in range(1, len(preorder)):
-        #     preorderVal = preorder[i]
-        #     node = stack[-1]
-        #     # 第一种情况
-        #     if node.val != inorder[inorderIndex]:
-        #         node.left = TreeNode(preorderVal)
-        #         stack.append(node.left)
-        #     else:  # 第二种情况
-        #         while stack and stack[-1].val == inorder[inorderIndex]:
-        #             node = stack.pop()
-        #             inorderIndex += 1
-        #         node.right = TreeNode(preorderVal)
-        #         stack.append(node.right)
+        if not preorder or not inorder or len(preorder) != len(inorder):
+            return None
+        # 先序遍历第一个值作为根节点
+        root = TreeNode(preorder[0])
+        stack = [root]
+        inorderIndex = 0
         #
-        # return root
+        for i in range(1, len(preorder)):
+            preorderVal = preorder[i]
+            node = stack[-1]
+            # 第一种情况
+            if node.val != inorder[inorderIndex]:
+                node.left = TreeNode(preorderVal)
+                stack.append(node.left)
+            else:  # 第二种情况
+                while stack and stack[-1].val == inorder[inorderIndex]:
+                    node = stack.pop()
+                    inorderIndex += 1
+                node.right = TreeNode(preorderVal)
+                stack.append(node.right)
+
+        return root
 
 # leetcode submit region end(Prohibit modification and deletion)

@@ -49,76 +49,107 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class TrieNode:
-
     def __init__(self):
-        self.next = [ None for _ in range(26)]
+        self.children = [None for _ in range(26)]
         self.val = 0
 
 
-class MapSum:
+class MapSum2:
     # 方法一：利用Trie树
     def __init__(self):
         self.map = dict()
         self.root = TrieNode()
 
     def insert(self, key: str, val: int) -> None:
-        delta = val
+        delta = val  # 思考一下，这里为何要用delta保存val？
         if key in self.map:
             delta -= self.map[key]
         self.map[key] = val
 
         node = self.root
         for c in key:
-            if node.next[ord(c) - ord('a')] is None:
-                node.next[ord(c) - ord('a')] = TrieNode()
-            node = node.next[ord(c) - ord('a')]
+            if node.children[ord(c) - ord('a')] is None:
+                node.children[ord(c) - ord('a')] = TrieNode()
+            node = node.children[ord(c) - ord('a')]
             node.val += delta
 
     def sum(self, prefix: str) -> int:
         node = self.root
         for c in prefix:
-            if node.next[ord(c) - ord('a')] is None:
+            if node.children[ord(c) - ord('a')] is None:
                 return 0
-            node = node.next[ord(c) - ord('a')]
+            node = node.children[ord(c) - ord('a')]
         return node.val
+
+
+class MapSum4:
     # 方法二：利用哈希表查找对应前缀给定的值
-    # def __init__(self):
-    #     self.map = {}
-    #     self.prefixmap = {}
-    #
-    # def insert(self, key: str, val: int) -> None:
-    #     delta = val
-    #     if key in self.map:
-    #         delta -= self.map[key]
-    #     self.map[key] = val
-    #     for i in range(len(key)):
-    #         currprefix = key[0:i + 1]
-    #         if currprefix in self.prefixmap:
-    #             self.prefixmap[currprefix] += delta
-    #         else:
-    #             self.prefixmap[currprefix] = delta
-    #
-    # def sum(self, prefix: str) -> int:
-    #     if prefix in self.prefixmap:
-    #         return self.prefixmap[prefix]
-    #     else:
-    #         return 0
+    def __init__(self):
+        self.map = {}
+        self.prefixmap = {}
+
+    def insert(self, key: str, val: int) -> None:
+        delta = val
+        if key in self.map:
+            delta -= self.map[key]
+        self.map[key] = val
+        for i in range(len(key)):
+            currprefix = key[0:i + 1]
+            if currprefix in self.prefixmap:
+                self.prefixmap[currprefix] += delta
+            else:
+                self.prefixmap[currprefix] = delta
+
+    def sum(self, prefix: str) -> int:
+        if prefix in self.prefixmap:
+            return self.prefixmap[prefix]
+        else:
+            return 0
 
 
+class MapSum3:
+    def __init__(self):
+        self.map = dict()
+
+    def insert(self, key: str, val: int) -> None:
+        self.map[key] = val
+
+    def sum(self, prefix: str) -> int:
+        res = 0
+        for key in self.map:
+            if key.startswith(prefix):
+                res += self.map[key]
+        return res
 
 
-    # def __init__(self):
-    #     self.map = dict()
-    #
-    # def insert(self, key: str, val: int) -> None:
-    #     self.map[key] = val
-    #
-    # def sum(self, prefix: str) -> int:
-    #     res = 0
-    #     for key in self.map:
-    #         if key.startswith(prefix):
-    #             res += self.map[key]
-    #     return res
+class MapSum:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, key: str, val: int) -> None:
+        node = self.root
+        for ch in key:
+            if node.children[ord(ch) - ord('a')] is None:
+                node.children[ord(ch) - ord('a')] = TrieNode()
+            node = node.children[ord(ch) - ord('a')]
+        node.val = val
+
+    def sum(self, prefix: str) -> int:
+        node = self.root
+        for ch in prefix:
+            if node.children[ord(ch) - ord('a')] is None:
+                node.children[ord(ch) - ord('a')] = TrieNode()
+            node = node.children[ord(ch) - ord('a')]
+
+        def getSum(node):
+            if node is None:
+                return 0
+            result = node.val
+            for child in node.children:
+                result += getSum(child)
+            return result
+
+        return getSum(node)
 
 # Your MapSum object will be instantiated and called as such:
 # obj = MapSum()

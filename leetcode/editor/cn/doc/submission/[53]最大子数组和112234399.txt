@@ -1,0 +1,22 @@
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        if not nums:
+            return
+        dp = [0] * len(nums)
+        ans = dp[0] = nums[0]
+        # res = [[] for _ in range(len(nums))]
+        # res[0] = [0]
+        # max_res = []
+        for i in range(1, len(nums)):
+            # if dp[i-1] + nums[i] > nums[i]:
+            #     res[i] = res[i-1] + [i]
+            # else:
+            #     res[i] = [i]
+            dp[i] = max(dp[i-1] + nums[i], nums[i])
+            # if dp[i] > ans:
+            #     max_res = dp[i]
+            ans = max(ans, dp[i])
+        return ans 
+
+# runtime:60 ms
+# memory:14.5 MB

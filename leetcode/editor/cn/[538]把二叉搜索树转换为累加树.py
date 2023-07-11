@@ -62,66 +62,67 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        # 方法一：反向 中序遍历
-        # if not root:
-        #     return
-        # if not root:
-        #     return []
-        # cur = root
-        # stack = []
-        # # 反序中序遍历：右-> 根 -> 左
-        # tmp = 0
-        # while stack or cur:
-        #     while cur:
-        #         stack.append(cur)
-        #         cur = cur.right
-        #     node = stack.pop()
-        #     node.val += tmp
-        #     tmp = node.val
-        #
-        #     if node.left:
-        #         cur = node.left
-        # return root
+    # def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    #     # 方法一：反向 中序遍历
+    #     if not root:
+    #         return
+    #     if not root:
+    #         return []
+    #     cur = root
+    #     stack = []
+    #     # 反序中序遍历：右-> 根 -> 左
+    #     tmp = 0
+    #     while stack or cur:
+    #         while cur:
+    #             stack.append(cur)
+    #             cur = cur.right
+    #         node = stack.pop()
+    #         node.val += tmp
+    #         tmp = node.val
+    #
+    #         if node.left:
+    #             cur = node.left
+    #     return root
 
-        def dfs(root: TreeNode):
-            nonlocal total
-            if root:
-                dfs(root.right)
-                total += root.val
-                root.val = total
-                dfs(root.left)
-        total = 0
-        dfs(root)
-        return root
-        # 方法二：morris 遍历
-        # def getSuccessor(node: TreeNode) -> TreeNode:
-        #     succ = node.right
-        #     while succ.left and succ.left != node:
-        #         succ = succ.left
-        #     return succ
-        #
-        # total = 0
-        # node = root
-        #
-        # while node:
-        #     if not node.right:
-        #         total += node.val
-        #         node.val = total
-        #         node = node.left
-        #     else:
-        #         succ = getSuccessor(node)
-        #         if not succ.left:
-        #             succ.left = node
-        #             node = node.right
-        #         else:
-        #             succ.left = None
-        #             total += node.val
-        #             node.val = total
-        #             node = node.left
-        #
-        # return root
+    # def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    #     def dfs(root: TreeNode):
+    #         nonlocal total
+    #         if root:
+    #             dfs(root.right)
+    #             total += root.val
+    #             root.val = total
+    #             dfs(root.left)
+    #     total = 0
+    #     dfs(root)
+    #     return root
 
-
+    # def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    #     # 方法二：morris 遍历
+    #     def getSuccessor(node: TreeNode) -> TreeNode:
+    #         succ = node.right
+    #         while succ.left and succ.left != node:
+    #             succ = succ.left
+    #         return succ
+    #
+    #     total = 0
+    #     node = root
+    #
+    #     while node:
+    #         if not node.right:
+    #             total += node.val
+    #             node.val = total
+    #             node = node.left
+    #         else:
+    #             succ = getSuccessor(node)
+    #             if not succ.left:
+    #                 succ.left = node
+    #                 node = node.right
+    #             else:
+    #                 succ.left = None
+    #                 total += node.val
+    #                 node.val = total
+    #                 node = node.left
+    #
+    #     return root
 
 # leetcode submit region end(Prohibit modification and deletion)

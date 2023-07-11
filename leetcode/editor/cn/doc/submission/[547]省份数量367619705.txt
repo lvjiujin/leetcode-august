@@ -1,0 +1,44 @@
+class Solution:
+    class DisjointSetUnion:
+        def __init__(self):
+            self.f = dict()
+            self.rank = dict()
+
+        def find(self, x: int) -> int:
+            if x not in self.f:
+                self.f[x] = x
+                self.rank[x] = 1
+                return x
+            if self.f[x] == x:
+                return x
+            self.f[x] = self.find(self.f[x])
+            return self.f[x]
+
+        def unionSet(self, x: int, y: int):
+            fx, fy = self.find(x), self.find(y)
+            if fx == fy:
+                return
+            if self.rank[fx] < self.rank[fy]:
+                fx, fy = fy, fx
+            self.rank[fx] += self.rank[fy]
+            self.f[fy] = fx
+
+        def numberOfConnectedComponent(self) -> int:
+            total = sum(1 for x, fa in self.f.items() if x == fa)
+
+            return total
+
+
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        dsu = Solution.DisjointSetUnion()
+        length = len(isConnected)
+        width = len(isConnected[0])
+        for i in range(length):
+            for j in range(width):
+                if isConnected[i][j] == 1:
+                    dsu.unionSet(i, j)
+
+        return dsu.numberOfConnectedComponent()
+
+# runtime:76 ms
+# memory:15.2 MB

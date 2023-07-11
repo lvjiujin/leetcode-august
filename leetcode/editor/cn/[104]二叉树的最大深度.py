@@ -35,7 +35,7 @@ class Solution:
         if not root:
             return 0
         max_dep = 0
-        queue, output = [root], []
+        queue = [root]
         while queue:
             max_dep += 1
             for _ in range(len(queue)):

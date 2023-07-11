@@ -1,0 +1,14 @@
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        if not x:
+            return x
+        if n == 0 or n == 1:
+            return x
+        if n % 2 == 0:
+            res = self.myPow(x, n/2) * self.myPow(x,n/2)
+        else:
+            res = x * self.myPow(x, n//2)* self.myPow(x,n//2)
+        
+        return res
+# runtime_error:Line 5: RecursionError: maximum recursion depth exceeded in comparison
+# last_testcase:2.00000 -2

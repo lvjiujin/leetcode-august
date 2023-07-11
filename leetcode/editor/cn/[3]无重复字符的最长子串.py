@@ -62,12 +62,12 @@ class Solution:
         # if not s:
         #     return 0
         # freq = {}
-        # start = max_length = 0
+        # start, max_length = 0, 0
         # for end, c in enumerate(s):
         #     freq[c] = freq.get(c, 0) + 1
         #     while freq[c] > 1:
-        #         freq[s[start]] -=1
-        #         start+=1
+        #         freq[s[start]] -= 1
+        #         start += 1
         #     max_length = max(max_length, end-start + 1)
         # return max_length
 

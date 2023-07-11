@@ -78,6 +78,28 @@ class Solution:
             return total
 
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        M = count = len(isConnected)
+        fathers = [i for i in range(M)]
+        def findFather(fathers, i):
+            if fathers[i] != i:
+                fathers[i] = findFather(fathers, fathers[i])
+            return fathers[i]
+
+        def union(fathers, i, j):
+            fatherI = findFather(fathers, i)
+            fatherJ = findFather(fathers, j)
+            if fatherI != fatherJ:
+                fathers[fatherI] = fatherJ
+                return True
+            return False
+
+        for i in range(M):
+            for j in range(i+1, M):
+                if isConnected[i][j] == 1 and union(fathers, i, j):
+                    count -= 1
+        return count
+
+    def findCircleNum2(self, isConnected: List[List[int]]) -> int:
         dsu = Solution.DisjointSetUnion()
         length = len(isConnected)
         width = len(isConnected[0])

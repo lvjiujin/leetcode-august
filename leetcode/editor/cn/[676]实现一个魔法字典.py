@@ -56,8 +56,7 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
-class MagicDictionary:
-
+class MagicDictionary2:
     def __init__(self):
         self.words = []
 
@@ -80,6 +79,48 @@ class MagicDictionary:
             if diff == 1:
                 return True
         return False
+
+# 方法二：借助trie树来实现。
+class MagicDictionary:
+    class TrieNode:
+        def __init__(self):
+            self.isWord = False
+            self.children = dict()
+
+    def __init__(self):
+        self.root = self.TrieNode()
+
+    def buildDict(self, dictionary: List[str]) -> None:
+        for word in dictionary:
+            node = self.root
+            for ch in word:
+                if ch not in node.children:
+                    node.children[ch] = self.TrieNode()
+                node = node.children[ch]
+            node.isWord = True
+
+    def search(self, searchWord: str) -> bool:
+        def dfs(node: MagicDictionary.TrieNode, pos, modified):
+            if node is None:
+                return False
+            # 当pos 等于searchWord长度时，说明递归完成，此时需要检查modified标志以及node.isWord标记。
+            if pos == len(searchWord):
+                return modified and node.isWord
+            ch = searchWord[pos]
+            # 如果node 有一个searchWord的子节点，继续进行递归操作
+            if ch in node.children:
+                if dfs(node.children[ch], pos + 1, modified):
+                    return True
+            if not modified:
+                # 当modified为False,可以将seachWord[pos]替换成任意节点继续进行递归
+                for cnext in node.children:
+                    if ch != cnext:
+                        if dfs(node.children[cnext], pos + 1, True):
+                            return True
+            return False
+        return dfs(self.root, 0, False)
+
+
 
 
 # Your MagicDictionary object will be instantiated and called as such:

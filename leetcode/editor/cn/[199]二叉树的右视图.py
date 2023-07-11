@@ -47,47 +47,51 @@
 #         self.right = right
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        # 深度优先：
-        rightmost_value_at_depth = dict()  # 深度为索引，存放节点的值
-        max_depth = -1
-
-        stack = [(root, 0)]
-        while stack:
-            node, depth = stack.pop()
-
-            if node is not None:
-                # 维护二叉树的最大深度
-                max_depth = max(max_depth, depth)
-
-                # 如果不存在对应深度的节点我们才插入
-                rightmost_value_at_depth.setdefault(depth, node.val)
-
-                stack.append((node.left, depth + 1))
-                stack.append((node.right, depth + 1))
-
-        return [rightmost_value_at_depth[depth] for depth in range(max_depth + 1)]
-
-        # 广度优先：二叉树的层序遍历: 获取每一层最右边的元素即可。
-        # if not root:
-        #     return []
-        # stack, res = [root], []
-        # while stack:
-        #     size = len(stack)
-        #     vals = []
-        #     for _ in range(size):
-        #         r = stack.pop(0)
-        #         vals.append(r.val)
-        #         if r.left:
-        #             stack.append(r.left)
-        #         if r.right:
-        #             stack.append(r.right)
-        #     res.append(vals)
-        # return [x[-1] for x in res]
-
+        # 方法一：深度优先：
         # rightmost_value_at_depth = dict()  # 深度为索引，存放节点的值
         # max_depth = -1
         #
-        # queue = deque([(root, 0)])
+        # stack = [(root, 0)]
+        # while stack:
+        #     node, depth = stack.pop()
+        #
+        #     if node is not None:
+        #         # 维护二叉树的最大深度
+        #         max_depth = max(max_depth, depth)
+        #
+        #         # 如果不存在对应深度的节点我们才插入
+        #         rightmost_value_at_depth.setdefault(depth, node.val)
+        #
+        #         stack.append((node.left, depth + 1))
+        #         stack.append((node.right, depth + 1))
+        #
+        # return [rightmost_value_at_depth[depth] for depth in range(max_depth + 1)]
+
+        # 方法二：广度优先：二叉树的层序遍历: 获取每一层最右边的元素即可。
+        if not root:
+            return []
+        import collections
+        stack, res = collections.deque([root]), []
+
+        while stack:
+            size = len(stack)
+
+            for i in range(size):
+                r = stack.popleft()
+                if i == size -1:
+                    res.append(r.val)
+                if r.left:
+                    stack.append(r.left)
+                if r.right:
+                    stack.append(r.right)
+
+        return res
+
+        # 方法三：
+        # rightmost_value_at_depth = dict()  # 深度为索引，存放节点的值
+        # max_depth = -1
+        #
+        # queue = collections.deque([(root, 0)])
         # while queue:
         #     node, depth = queue.popleft()
         #

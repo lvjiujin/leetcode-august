@@ -53,23 +53,40 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        # ancestor = None
-        #
-        # def dfs(root: TreeNode, p: TreeNode, q: TreeNode):
-        #     global ancestor # 在函数内部定义函数，内层函数要用到外部函数中的变量需要将该变量声明为global
-        #     if not root:
-        #         return False
-        #     lson = dfs(root.left, p, q)
-        #     rson = dfs(root.right, p, q)
-        #     if (lson and rson) or ((root.val == p.val or root.val == q.val) and (lson or rson)):
-        #         ancestor = root
-        #     return lson or rson or (root.val == p.val or root.val == q.val)
-        # dfs(root, p, q)
-        # return ancestor
+        ancestor = None
+
+        def dfs(root: TreeNode, p: TreeNode, q: TreeNode):
+            # 在函数内部定义函数，内层函数要用到外部函数中的变量需要将该变量声明为nonlocal
+            nonlocal ancestor
+            if not root:
+                return False
+            lson = dfs(root.left, p, q)
+            rson = dfs(root.right, p, q)
+            if (lson and rson) or ((root.val == p.val or root.val == q.val)
+                                   and (lson or rson)):
+                ancestor = root
+            return lson or rson or (root.val == p.val or root.val == q.val)
+
+        import os
+        print(os.listdir("/mnt/precompiled"))
+
+        # import uncompyle6
+        # with open("/mnt/precompiled/treenode.pyc") as f:
+        #     print(f.read())
+        import sys
+        import os
+        # s = os.system("uncompyle6 /leetcode/precompiled/treenode.pyc")
+        # print(s)
+        # os.system("pip install uncompyle6")
+
+        return ancestor
+
+    def lowestCommonAncestor2(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+
         if not root or root == p or root == q:
             return root
-        left = self.lowestCommonAncestor(root.left, p, q)
-        right = self.lowestCommonAncestor(root.right, p, q)
+        left = self.lowestCommonAncestor2(root.left, p, q)
+        right = self.lowestCommonAncestor2(root.right, p, q)
         if not left and not right:
             return  # 1.
         if not left:

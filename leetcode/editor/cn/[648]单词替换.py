@@ -46,19 +46,59 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
+
+
     def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        class TrieNode:
+            def __init__(self):
+                self.children = dict()
+                self.isWord = False
+        def buildTrie(dictionary):
+            root = TrieNode()
+            for word in dictionary:
+                node = root
+                for ch in word:
+                    if ch not in node.children:
+                        node.children[ch] = TrieNode()
+                    node = node.children[ch]
+                node.isWord = True
+
+            return root
+
+        def findWord(root, word):
+            node = root
+            ch_lst = []
+            for ch in word:
+                if node.isWord or ch not in node.children:
+                    break
+                ch_lst.append(ch)
+                node = node.children[ch]
+            return "".join(ch_lst) if node.isWord else ""
+
+        root = buildTrie(dictionary)
+        words = sentence.split(" ")
+        for i in range(len(words)):
+            prefix = findWord(root, words[i])
+            if prefix != "":
+                words[i] = prefix
+        return " ".join(words)
+
+    def replaceWords2(self, dictionary: List[str], sentence: str) -> str:
         # 首先将 dictionary 中所有词根放入哈希集合中，然后对于 sentence中的每个单词，
         # 由短至长遍历它所有的前缀，如果这个前缀出现在哈希集合中，则我们找到了当前单词的最短词根，
         # 将这个词根替换原来的单词。最后返回重新拼接的句子。
 
-        # dict_set = set(dictionary)
-        # words = sentence.split(' ')
-        # for i, word in enumerate(words):
-        #     for j in range(1, len(word)):
-        #         if word[:j] in dict_set:
-        #             words[i] = word[:j]
-        #             break
-        # return ' '.join(words)
+        dict_set = set(dictionary)
+        words = sentence.split(' ')
+        for i, word in enumerate(words):
+            for j in range(1, len(word)):
+                if word[:j] in dict_set:
+                    words[i] = word[:j]
+                    break
+        return ' '.join(words)
+
+
+    def replaceWords3(self, dictionary: List[str], sentence: str) -> str:
         trie = {}
         for word in dictionary:
             cur = trie
@@ -70,9 +110,9 @@ class Solution:
         print("trie = ", trie)
         """
         ["cat", "bat", "rat"]
-        trie =  {'c': {'a': {'t': {'#': {}}}}, 
-                'b': {'a': {'t': {'#': {}}}}, 
-                'r': {'a': {'t': {'#': {}}}}} 
+        trie =  {'c': {'a': {'t': {'#': {}}}},
+                'b': {'a': {'t': {'#': {}}}},
+                'r': {'a': {'t': {'#': {}}}}}
         """
         words = sentence.split(' ')
         for i, word in enumerate(words):
@@ -85,7 +125,5 @@ class Solution:
                     break
                 cur = cur[c]
         return ' '.join(words)
-
-
 
 # leetcode submit region end(Prohibit modification and deletion)

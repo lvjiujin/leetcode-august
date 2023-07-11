@@ -82,7 +82,7 @@ class Solution:
                 ans = max(ans, dsu.unionSet(num, num + 1))
         return ans
     # 方法二：哈希集合
-    def longestConsecutive(self, nums: List[int]) -> int:
+    def longestConsecutive2(self, nums: List[int]) -> int:
         # 建立一个存储所有数的哈希表，同时起到去重功能
         hash_set = set()
         for num in nums:
@@ -101,7 +101,7 @@ class Solution:
         return ans
 
     # 方法三：哈希+右边界
-    def longestConsecutive(self, nums: List[int]) -> int:
+    def longestConsecutive3(self, nums: List[int]) -> int:
 
         #  key表示num，value表示num最远到达的连续右边界
         map = dict()
@@ -121,7 +121,7 @@ class Solution:
         return ans
 
     # 方法三：哈希表记录连续区间长度（动态规划）
-    def longestConsecutive(self, nums: List[int]) -> int:
+    def longestConsecutive4(self, nums: List[int]) -> int:
 
         # key表示num，value表示num所在连续区间的长度
         map = dict()

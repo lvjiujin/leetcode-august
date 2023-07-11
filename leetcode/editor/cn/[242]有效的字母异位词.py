@@ -36,8 +36,8 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        from collections import Counter
-        return Counter(s) == Counter(t)
+        # from collections import Counter
+        # return Counter(s) == Counter(t)
         # 解法一：
         # if not s or not t or len(s) != len(t):
         #     return False
@@ -48,25 +48,31 @@ class Solution:
         # else:
         #     return False
         # 解法二:
+        if not s or not t or len(s) != len(t):
+            return False
+        char_dict = dict()
+        for c in s:
+            char_dict[c] = char_dict.get(c, 0) + 1
+
+        for c in t:
+            if c not in char_dict or char_dict[c] == 0:
+                return False
+            char_dict[c] -= 1
+
+        return True
+
+        # 方法三
         # if not s or not t or len(s) != len(t):
         #     return False
-        # char_dict = dict()
-        # for c in s:
-        #     if c in char_dict:
-        #         char_dict[c] +=1
-        #     else:
-        #         char_dict[c] = 1
-        # for c in t:
-        #     if c not in char_dict:
+        # counts = [ 0 for _ in range(26)]
+        # for ch in s:
+        #     counts[ord(ch) - ord('a')] += 1
+        # for ch in t:
+        #     if counts[ord(ch) - ord('a')] == 0:
         #         return False
-        #     else:
-        #         char_dict[c]-=1
-        #
-        # for value in char_dict.values():
-        #     if value != 0:
-        #         return False
-        #
+        #     counts[ord(ch) - ord('a')] -= 1
         # return True
+
 
 
 
